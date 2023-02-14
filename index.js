@@ -41,15 +41,18 @@ app.use((err,req,res, next) =>{
 
     const errorStatus = err.status || 500
     const errorMessage = err.message || "Something went wrong"
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
     return res.status(errorStatus).json({
         success: false,
         status: errorStatus,
         message: errorMessage,
         stack: err.stack
     })
+    
 })
-
-app.listen(8800, ()=> {
+const PORT = process.env.PORT || 8800;
+app.listen(PORT, ()=> {
     connect();
     console.log("connected to backend!");
 })
