@@ -6,9 +6,12 @@ import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 
 const app = express();
+app.use(cors())
 dotenv.config();
+
 
 // https://mongoosejs.com/docs/connections.html
 const connect = async () => {
@@ -41,8 +44,7 @@ app.use((err,req,res, next) =>{
 
     const errorStatus = err.status || 500
     const errorMessage = err.message || "Something went wrong"
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
+
     return res.status(errorStatus).json({
         success: false,
         status: errorStatus,
